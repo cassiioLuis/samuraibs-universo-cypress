@@ -91,6 +91,12 @@ describe('login', function () {
             loginPage.form(login)
             loginPage.submit()
             loginPage.h1.shouldHaveText('Horários agendados')
+
+            cy.intercept('GET', '/appointments/days',{
+                statusCode: 200
+            }).as('getDays')
+
+            cy.wait('@getDays')
         })
 
     })
