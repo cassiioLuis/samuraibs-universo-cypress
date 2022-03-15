@@ -1,5 +1,5 @@
 import signupPage from '../support/pages/signup'
-import addUser from '../support/helpers/add-user'
+import helperApi from '../support/helpers/api'
 
 describe('cadastro', function () {
 
@@ -43,7 +43,7 @@ describe('cadastro', function () {
                     console.log(result)
                 })
             
-            addUser.addUser(user)
+            helperApi.addUser(user)
 
         })
 

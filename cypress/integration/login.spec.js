@@ -1,5 +1,5 @@
 import loginPage from '../support/pages/login'
-import addUser from '../support/helpers/add-user'
+import helperApi from '../support/helpers/api'
 
 describe('login', function () {
 
@@ -18,7 +18,7 @@ describe('login', function () {
                     console.log(result)
                 })
 
-            addUser.addUser(login)
+            helperApi.addUser(login)
         })
 
         it('deve exibir a mensagem de credenciais incorretas', function () {
@@ -83,7 +83,7 @@ describe('login', function () {
                     console.log(result)
                 })
 
-            addUser.addUser(login)
+            helperApi.addUser(login)
         })
 
         it('deve realizar o login', function () {
@@ -92,11 +92,7 @@ describe('login', function () {
             loginPage.submit()
             loginPage.h1.shouldHaveText('Horários agendados')
 
-            cy.intercept('GET', '/appointments/days',{
-                statusCode: 200
-            }).as('getDays')
-
-            cy.wait('@getDays')
+            helperApi.intercept('GET', '/appointments/days', 200)
         })
 
     })
