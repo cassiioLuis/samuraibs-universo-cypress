@@ -1,16 +1,4 @@
 /// <reference types="cypress" />
-// ***********************************************************
-// This example plugins/index.js can be used to load plugins
-//
-// You can change the location of this file or turn off loading
-// the plugins file with the 'pluginsFile' configuration option.
-//
-// You can read more here:
-// https://on.cypress.io/plugins-guide
-// ***********************************************************
-
-// This function is called when a project is opened or re-opened (e.g. due to
-// the project's config changing)
 
 const { Pool } = require('pg')
 
@@ -20,32 +8,27 @@ const { Pool } = require('pg')
 // eslint-disable-next-line no-unused-vars
 module.exports = (on, config) => {
 
-  const pool = new Pool({
-    host: 'jelani.db.elephantsql.com',
-    user: 'zbagjbay',
-    password: 'IIjlt6qCEeivXGoC_fVF_DbeRS9mCrYY',
-    database: 'zbagjbay',
-    port: 5432
-  })
+  const configJson = require(config.configFile)
+  const pool = new Pool(configJson.dbConfig)
 
   on('task', {
     removeUser(email) {
 
-      return new Promise(function(resolve){
-        pool.query('DELETE FROM public.users WHERE email = $1', [email], function(error, result){
-          
-          if(error){
+      return new Promise(function (resolve) {
+        pool.query('DELETE FROM public.users WHERE email = $1', [email], function (error, result) {
+
+          if (error) {
             throw error
           }
 
-          resolve({success: result})
+          resolve({ success: result })
 
         })
 
       })
 
     }
-    
+
   })
 
 }
