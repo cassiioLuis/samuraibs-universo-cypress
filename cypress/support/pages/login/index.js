@@ -1,31 +1,30 @@
 import { el } from './elements'
 
+import h1 from '../../components/h1'
 import toast from '../../components/toast'
 import alertError from '../../components/alert-error'
 
-class SignupPage {
+class LoginPage {
 
     constructor () {
+        this.h1 = h1
         this.toast = toast
         this.alertError = alertError
     }
-
+    
     go() {
-        cy.visit('/signup');
+        cy.visit('http://localhost:3000/')
     }
 
-    form(user) {
-        cy.get(el.name).type(user.name)
-        cy.get(el.email).type(user.email)
-        cy.get(el.password).type(user.password)
+    form(login) {
+        cy.get(el.email).type(login.email)
+        cy.get(el.password).type(login.password)
     }
 
     submit() {
         cy.contains(el.button).click()
     }
 
-    
-
 }
 
-export default new SignupPage()
+export default new LoginPage()

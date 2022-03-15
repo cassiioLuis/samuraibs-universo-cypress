@@ -20,15 +20,11 @@ module.exports = (on, config) => {
           if (error) {
             throw error
           }
-
           resolve({ success: result })
-
         })
-
       })
 
     }
-
   })
 
 }

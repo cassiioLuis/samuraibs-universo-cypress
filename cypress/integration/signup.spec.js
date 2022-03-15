@@ -1,4 +1,5 @@
 import signupPage from '../support/pages/signup'
+import addUser from '../support/helpers/add-user'
 
 describe('cadastro', function () {
 
@@ -41,14 +42,9 @@ describe('cadastro', function () {
                 .then(function (result) {
                     console.log(result)
                 })
+            
+            addUser.addUser(user)
 
-            cy.request(
-                'POST',
-                'http://localhost:3333/users',
-                user
-            ).then(function (response) {
-                expect(response.status).to.eql(200)
-            })
         })
 
         it('não deve cadastrar o usuário', function () {
@@ -70,7 +66,7 @@ describe('cadastro', function () {
             signupPage.go()
             signupPage.form(user)
             signupPage.submit()
-            signupPage.alertHaveText('Informe um email válido')
+            signupPage.alertError.alertHaveText('Informe um email válido')
         })
     })
 
@@ -93,7 +89,7 @@ describe('cadastro', function () {
         })
 
         afterEach(function () {
-            signupPage.alertHaveText('Pelo menos 6 caracteres')
+            signupPage.alertError.alertHaveText('Pelo menos 6 caracteres')
         })
 
     })
@@ -113,7 +109,7 @@ describe('cadastro', function () {
         alertMessages.forEach(function (alert) {
             
             it('deve exibir ' + alert.toLocaleLowerCase(), function () {
-                signupPage.alertHaveText(alert)
+                signupPage.alertError.alertHaveText(alert)
             })
 
         })
