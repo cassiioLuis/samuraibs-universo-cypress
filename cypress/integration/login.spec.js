@@ -1,5 +1,6 @@
 import loginPage from '../support/pages/login'
 import helperApi from '../support/helpers/api'
+import dashPage  from '../support/pages/dash'
 
 describe('login', function () {
 
@@ -68,7 +69,7 @@ describe('login', function () {
         })
     })
 
-    context('realizar login com sucesso', function () {
+    context.only('realizar login com sucesso', function () {
 
         const login = {
             name: 'Mariana Mendes',
@@ -90,9 +91,10 @@ describe('login', function () {
             loginPage.go()
             loginPage.form(login)
             loginPage.submit()
-            loginPage.h1.shouldHaveText('Horários agendados')
 
             helperApi.intercept('GET', '/appointments/days', 200)
+
+            dashPage.header.userLoggedIn(login.name)            
         })
 
     })
