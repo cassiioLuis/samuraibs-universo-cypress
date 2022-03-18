@@ -38,12 +38,7 @@ describe('cadastro', function () {
         }
 
         before(function () {
-            cy.task('removeUser', user.email)
-                .then(function (result) {
-                    console.log(result)
-                })
-            
-            helperApi.addUser(user)
+            cy.postUser(user)
 
         })
 

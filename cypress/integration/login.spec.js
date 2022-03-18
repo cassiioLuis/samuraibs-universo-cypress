@@ -69,9 +69,9 @@ describe('login', function () {
         })
     })
 
-    context.only('realizar login com sucesso', function () {
+    context('realizar login com sucesso', function () {
 
-        const login = {
+        const user = {
             name: 'Mariana Mendes',
             email: 'mariana@samuraibs.com',
             password: 'pwd123',
@@ -79,22 +79,17 @@ describe('login', function () {
         }
 
         before(function () {
-            cy.task('removeUser', login.email)
-                .then(function (result) {
-                    console.log(result)
-                })
-
-            helperApi.addUser(login)
+            cy.postUser(user)
         })
 
         it('deve realizar o login', function () {
             loginPage.go()
-            loginPage.form(login)
+            loginPage.form(user)
             loginPage.submit()
 
             helperApi.intercept('GET', '/appointments/days', 200)
 
-            dashPage.header.userLoggedIn(login.name)            
+            dashPage.header.userLoggedIn(user.name)            
         })
 
     })

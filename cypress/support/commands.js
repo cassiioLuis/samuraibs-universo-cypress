@@ -23,3 +23,14 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+import helperApi from './helpers/api'
+
+Cypress.Commands.add('postUser', function (user) {
+    cy.task('removeUser', user.email)
+        .then(function (result) {
+            console.log(result)
+        })
+
+    helperApi.addUser(user)
+})
