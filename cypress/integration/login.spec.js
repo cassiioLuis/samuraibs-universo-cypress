@@ -1,11 +1,11 @@
 import loginPage from '../support/pages/login'
 import helperApi from '../support/helpers/api'
-import dashPage  from '../support/pages/dash'
+import dashPage from '../support/pages/dash'
 
 describe('login', function () {
 
     context('quando a senha está incorreta', function () {
-        const login = {
+        let login = {
             name: 'Fernanda Ramos',
             email: 'fernanda@samuraibs.com',
             password: 'pwd123',
@@ -13,18 +13,12 @@ describe('login', function () {
         }
 
         before(function () {
-
-            cy.task('removeUser', login.email)
-                .then(function (result) {
-                    console.log(result)
-                })
-
-            helperApi.addUser(login)
+            cy.postUser(login).then(function () {
+                login.password = 'senhaErrada'
+            })
         })
 
         it('deve exibir a mensagem de credenciais incorretas', function () {
-            login.password = 'senhaErrada'
-
             loginPage.go()
             loginPage.form(login)
             loginPage.submit()
@@ -33,15 +27,15 @@ describe('login', function () {
     })
 
     context('quando email está com formato inválido', function () {
-        const emails = ['incorreto.com.br', 'teste@invalido', '"comaspas@"maisaspas.com.br']
+        const emails = ['incorreto.com.br', 'teste@invalido', '"comaspas@"maisaspas.com.br', '@', 'email@', '@gmail.com', '123', 'abc123', '@#$¨&¨87']
 
-        beforeEach(function () {
+        before(function () {
             loginPage.go()
         })
 
         emails.forEach(function (e) {
 
-            const login = { email: e, password: 'pwd123'}
+            const login = { email: e, password: 'pwd123' }
 
             it('deve exibir aviso de email inválido', function () {
                 loginPage.form(login)
@@ -49,20 +43,20 @@ describe('login', function () {
                 loginPage.alertError.alertHaveText('Informe um email válido')
             })
         })
-        
+
     })
 
     context('quando não preencho os campos', function () {
         const alertMessages = ['E-mail é obrigatório', 'Senha é obrigatória']
-        
+
         before(function () {
             loginPage.go()
             loginPage.submit()
         })
 
         alertMessages.forEach(function (alert) {
-            
-            it('deve exibir ' + alert.toLocaleLowerCase(), function (){
+
+            it('deve exibir ' + alert.toLocaleLowerCase(), function () {
                 loginPage.alertError.alertHaveText(alert)
             })
 
@@ -87,9 +81,7 @@ describe('login', function () {
             loginPage.form(user)
             loginPage.submit()
 
-            helperApi.intercept('GET', '/appointments/days', 200)
-
-            dashPage.header.userLoggedIn(user.name)            
+            dashPage.header.userLoggedIn(user.name)
         })
 
     })
