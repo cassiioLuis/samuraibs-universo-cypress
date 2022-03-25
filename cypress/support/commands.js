@@ -9,14 +9,14 @@ Cypress.Commands.add('postUser', function (user) {
     helperApi.addUser(user)
 })
 
-Cypress.Commands.add('recoveryPass', function (email) {
-    cy.request('POST', 'http://localhost:3333/password/forgot', { email: email })
-        .then(function (response) {
-            expect(response.status).to.eq(204)
+Cypress.Commands.add("recoveryPass", function (email) {
+    cy.request("POST", "http://localhost:3333/password/forgot", {
+        email: email,
+    }).then(function (response) {
+        expect(response.status).to.eq(204);
+    });
 
-            cy.task('findToken', email)
-                .then(function (result) {
-                    Cypress.env('recoveryToken', result.token)
-                })
-        })
-})
+    cy.task("findToken", email).then(function (result) {
+        Cypress.env("recoveryToken", result.token);
+    });
+});
