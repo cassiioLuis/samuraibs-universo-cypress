@@ -40,7 +40,7 @@ describe('login', function () {
             it('deve exibir aviso de email inválido', function () {
                 loginPage.form(login)
                 loginPage.submit()
-                loginPage.alertError.alertHaveText('Informe um email válido')
+                loginPage.alertError.HaveText('Informe um email válido')
             })
         })
 
@@ -57,7 +57,7 @@ describe('login', function () {
         alertMessages.forEach(function (alert) {
 
             it('deve exibir ' + alert.toLocaleLowerCase(), function () {
-                loginPage.alertError.alertHaveText(alert)
+                loginPage.alertError.HaveText(alert)
             })
 
         })
