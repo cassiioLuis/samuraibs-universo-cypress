@@ -1,11 +1,11 @@
-
+import { apiServer } from '../../../../cypress.json'
 
 class HelpersApi {
 
     addUser(user){
         cy.request(
             'POST',
-            'http://localhost:3333/users',
+            apiServer + '/users',
             user
         ).then(function (response) {
             expect(response.status).to.eql(200)
