@@ -1,9 +1,11 @@
 {
-    "baseUrl": "http://localhost:3000",
-    "apiServer": "http://localhost:3333",
+    "baseUrl": "https://samuraibs-web-cassio.herokuapp.com",
+    "apiServer": "https://samuraibs-api-cassio.herokuapp.com",
 
     "viewportWidth": 1440,
     "viewportHeight": 900,
+
+    "defaultCommandTimeout": 60000,
 
     "dbConfig": {
         "host": "jelani.db.elephantsql.com",
